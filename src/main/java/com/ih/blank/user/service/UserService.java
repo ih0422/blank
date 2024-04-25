@@ -1,6 +1,6 @@
 package com.ih.blank.user.service;
 
-import com.ih.blank.user.controller.dto.request.UserRequest;
+import com.ih.blank.user.controller.dto.request.JoinRequest;
 import com.ih.blank.user.model.User;
 import com.ih.blank.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -11,12 +11,12 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginService {
+public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Transactional(rollbackOn = Exception.class)
-    public void save(UserRequest userRequest) {
+    public void join(JoinRequest userRequest) {
         User user = userMapper.toEntity(userRequest);
         User savedOne = userRepository.findUserByEmail(user.getEmail());
 
