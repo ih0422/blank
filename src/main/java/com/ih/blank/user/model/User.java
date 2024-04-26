@@ -48,6 +48,14 @@ public class User {
     private UserRoleType role = UserRoleType.STANDARD;
 
     public void setPassword(String password) {
-        this.password = HashingUtil.sha256(password);
+        this.password = hashPassword(password);
+    }
+
+    public boolean isSamePassword(String password) {
+        return hashPassword(password).equals(this.password);
+    }
+
+    private String hashPassword(String password) {
+        return HashingUtil.sha256(password);
     }
 }
