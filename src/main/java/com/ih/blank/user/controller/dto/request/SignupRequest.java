@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JoinRequest {
+public class SignupRequest {
 
     @NotBlank
     private String email;
