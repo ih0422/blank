@@ -7,25 +7,23 @@ import com.ih.blank.user.model.JwtHelper;
 import com.ih.blank.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    @GetMapping("/signup/test")
-    public String test() {
-        return " hello ";
-    }
-
     @PostMapping("/signup")
-    public boolean signup(@Valid @RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<Void> signup(@Valid @RequestBody SignupRequest signupRequest) {
         userService.signup(signupRequest);
-        return true;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")

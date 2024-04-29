@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -24,7 +25,7 @@ public class JwtHelper {
                 .setSubject(email)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -40,8 +41,9 @@ public class JwtHelper {
     private static Claims getTokenBody(String token) {
         try {
             return Jwts
-                    .parser()
+                    .parserBuilder()
                     .setSigningKey(SECRET_KEY)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (SignatureException | ExpiredJwtException e) { // Invalid signature or expired token
